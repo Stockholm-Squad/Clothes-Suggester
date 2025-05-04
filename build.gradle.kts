@@ -4,6 +4,7 @@ plugins {
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
+val koinVersion = "3.5.3"
 
 repositories {
     mavenCentral()
@@ -11,6 +12,13 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    koinDependencies()
+}
+
+fun koinDependencies() {
+    dependencies {
+        implementation("io.insert-koin:koin-core:$koinVersion")
+    }
 }
 
 tasks.test {

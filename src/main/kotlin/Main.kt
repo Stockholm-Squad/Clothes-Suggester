@@ -1,7 +1,17 @@
 package org.example
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import org.example.di.appModule
+import org.example.ui.SuggesterClothesConsole
+import org.koin.core.context.startKoin
+import org.koin.core.logger.PrintLogger
+import org.koin.java.KoinJavaComponent.getKoin
+
 fun main() {
+    startKoin {
+        logger(PrintLogger())
+        modules(appModule)
+    }
+
+    val suggesterClothesConsole = getKoin().get<SuggesterClothesConsole>()
 
 }
