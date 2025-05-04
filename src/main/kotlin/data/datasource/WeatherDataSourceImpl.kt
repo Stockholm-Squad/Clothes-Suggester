@@ -1,10 +1,10 @@
 package org.example.data.datasource
 
-import org.example.data.model.WeatherModel
-import org.example.data.model.WeatherRequest
+import logic.model.LocationModel
+import logic.model.WeatherModel
 
 class WeatherDataSourceImpl: WeatherDataSource {
-    override suspend fun getWeather(weatherRequest: WeatherRequest): WeatherModel? {
+    override suspend fun getWeather(locationModel: LocationModel): WeatherModel? {
         TODO("Not yet implemented")
     }
 }

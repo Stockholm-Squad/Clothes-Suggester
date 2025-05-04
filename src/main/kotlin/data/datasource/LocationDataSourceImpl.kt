@@ -1,12 +1,14 @@
 package org.example.data.datasource
 
-import org.example.data.model.LocationModel
+import logic.model.LocationModel
 
 class LocationDataSourceImpl: LocationDataSource {
-    override suspend fun getCurrentLocation(
-        country: String,
-        city: String
-    ): LocationModel {
+
+    override suspend fun getCurrentLocation(): LocationModel? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getLocationByCountry(country: String): LocationModel? {
         TODO("Not yet implemented")
     }
 }
