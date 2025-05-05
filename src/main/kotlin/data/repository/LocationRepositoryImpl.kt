@@ -13,7 +13,7 @@ class LocationRepositoryImpl(
     }
 
     override suspend fun getLocationByCountryAndCity(country: String, city: String): LocationModel? {
-        return locationDataSource.getLocationByCountryAndCity(country, city).toModel()
+        return locationDataSource.getLocationByCountryAndCity(country, city)?.firstOrNull().toModel()
 
     }
 }

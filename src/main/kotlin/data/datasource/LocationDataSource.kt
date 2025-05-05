@@ -5,5 +5,5 @@ import org.example.data.dto.IpLocationDto
 
 interface LocationDataSource {
     suspend fun getCurrentLocation(): IpLocationDto?
-    suspend fun getLocationByCountryAndCity(country: String, city: String): GeoLocationDto?
+    suspend fun getLocationByCountryAndCity(country: String, city: String): List<GeoLocationDto?>?
 }
