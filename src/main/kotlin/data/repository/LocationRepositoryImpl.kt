@@ -2,16 +2,20 @@ package org.example.data.repository
 
 import logic.model.LocationModel
 import org.example.data.datasource.LocationDataSource
+import org.example.data.mapper.LocationMapper
 import org.example.logic.repository.LocationRepository
 
 class LocationRepositoryImpl(
-    private val locationDataSource: LocationDataSource
-): LocationRepository {
+    private val locationDataSource: LocationDataSource,
+    private val locationMapper: LocationMapper
+) : LocationRepository {
     override suspend fun getCurrentLocation(): LocationModel? {
-        TODO("Not yet implemented")
+        return locationMapper.mapLocationDtoToEntity(
+            locationDataSource.getCurrentLocation()
+        )
     }
 
-    override suspend fun getLocationByCountry(country: String): LocationModel? {
+    override suspend fun getLocationByCountry(country: String, city: String): LocationModel? {
         TODO("Not yet implemented")
     }
 }

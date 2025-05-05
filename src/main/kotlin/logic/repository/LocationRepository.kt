@@ -4,5 +4,5 @@ import logic.model.LocationModel
 
 interface LocationRepository {
     suspend fun getCurrentLocation(): LocationModel?
-    suspend fun getLocationByCountry(country: String): LocationModel?
+    suspend fun getLocationByCountry(country: String, city: String): LocationModel?
 }
