@@ -16,18 +16,6 @@ fun IpLocationDto?.toModel(): LocationModel? {
     )
 }
 
-fun LocationModel?.toIpDto(): IpLocationDto? {
-    if (this == null) return null
-    return IpLocationDto(
-        latitude = this.latitude,
-        longitude = this.longitude,
-        city = this.city,
-        country = this.country,
-        timezone = this.timezone,
-        countryCode = this.countryCode,
-    )
-}
-
 fun GeoLocationDto?.toModel(): LocationModel? {
     if (this == null) return null
     return LocationModel(
@@ -40,14 +28,3 @@ fun GeoLocationDto?.toModel(): LocationModel? {
     )
 }
 
-fun LocationModel?.toGeoDto(): GeoLocationDto? {
-    if (this == null) return null
-    return GeoLocationDto(
-        latitude = this.latitude,
-        longitude = this.longitude,
-        city = this.city,
-        country = this.country,
-        timezone = this.timezone,
-        countryCode = this.countryCode,
-    )
-}
