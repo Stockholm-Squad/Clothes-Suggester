@@ -12,11 +12,12 @@ import org.example.logic.repository.WeatherRepository
 import org.koin.dsl.module
 
 val dataModule = module {
-    factory<LocationDataSource> { LocationDataSourceImpl() }
+    factory<LocationDataSource> { LocationDataSourceImpl(get()) }
     factory<WeatherDataSource> { WeatherDataSourceImpl() }
 
     factory<LocationRepository> { LocationRepositoryImpl(get(), get()) }
     factory<WeatherRepository> { WeatherRepositoryImpl(get()) }
 
     factory { LocationMapper() }
+
 }
