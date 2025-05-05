@@ -24,7 +24,7 @@ class GetWeatherUseCaseTest {
     }
 
     @Test
-    fun `getWeather() should return Temperature correctly when repo succeeds`() = runBlocking {
+    fun `getWeatherOfDay() should return Temperature correctly when repo succeeds`() = runBlocking {
 
         // Given
         val excepted=30.0
@@ -36,7 +36,7 @@ class GetWeatherUseCaseTest {
         coEvery { weatherRepository.getWeather(LocationModel(26.6, 31.7, "Africa/Cairo")) } returns weatherModel
 
         // When
-        val result = getWeatherUseCase.getWeather(LocationModel(26.6, 31.7, "Africa/Cairo"))
+        val result = getWeatherUseCase.getWeatherOfDay(LocationModel(26.6, 31.7, "Africa/Cairo"))
 
         // Then
         assertThat(result).isEqualTo(excepted)
