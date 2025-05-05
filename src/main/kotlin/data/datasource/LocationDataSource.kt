@@ -1,7 +1,8 @@
 package org.example.data.datasource
 
-import org.example.data.model.LocationModel
+import logic.model.LocationModel
 
 interface LocationDataSource {
-    suspend fun getCurrentLocation(country: String,city: String): LocationModel
+    suspend fun getCurrentLocation(): LocationModel?
+    suspend fun getLocationByCountry(country: String): LocationModel?
 }

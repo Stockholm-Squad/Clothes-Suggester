@@ -1,8 +1,8 @@
 package org.example.data.datasource
 
-import org.example.data.model.WeatherModel
-import org.example.data.model.WeatherRequest
+import logic.model.LocationModel
+import logic.model.WeatherModel
 
 interface WeatherDataSource {
-    suspend fun getWeather(weatherRequest: WeatherRequest): WeatherModel?
+    suspend fun getWeather(locationModel: LocationModel): WeatherModel?
 }

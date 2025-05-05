@@ -1,4 +1,8 @@
 package org.example.logic.repository
 
+import logic.model.LocationModel
+
 interface LocationRepository {
+    suspend fun getCurrentLocation(): LocationModel?
+    suspend fun getLocationByCountry(country: String): LocationModel?
 }
