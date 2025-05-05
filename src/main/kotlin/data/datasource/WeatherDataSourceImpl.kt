@@ -1,10 +1,20 @@
 package org.example.data.datasource
 
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import kotlinx.serialization.json.Json
 import logic.model.LocationModel
 import logic.model.WeatherModel
 
-class WeatherDataSourceImpl: WeatherDataSource {
-    override suspend fun getWeather(locationModel: LocationModel): WeatherModel? {
-        TODO("Not yet implemented")
+class WeatherDataSourceImpl(
+    private val client: HttpClient = HttpClient(CIO)
+
+): WeatherDataSource {
+    override suspend fun getWeather(locationModel: LocationModel?): WeatherModel? {
+        val url="https://api.open-meteo.com/v1/forecast?latitude=${locationModel?.lat}&longitude=${locationModel?.lon}&daily=temperature_2m_max&daily=windspeed_10m_max&timezone=${locationModel?.timezone}&daily=temperature_2m_min"
+        val response =client.get(url)
+        return Json.decodeFromString(response.bodyAsText())
     }
 }
