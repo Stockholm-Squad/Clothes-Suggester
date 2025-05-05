@@ -1,34 +1,53 @@
 package org.example.data.mapper
 
 import logic.model.LocationModel
-import org.example.data.dto.LocationDto
+import org.example.data.dto.GeoLocationDto
+import org.example.data.dto.IpLocationDto
 
-class LocationMapper {
-    fun mapLocationDtoToEntity(locationDto: LocationDto?): LocationModel? {
-        if (locationDto == null) return null
-        return LocationModel(
-            ip = locationDto.ip,
-            latitude = locationDto.latitude,
-            longitude = locationDto.longitude,
-            city = locationDto.city,
-            country = locationDto.country,
-            regionName = locationDto.regionName,
-            zip = locationDto.zip,
-            timezone = locationDto.timezone
-        )
-    }
+fun IpLocationDto?.toModel(): LocationModel? {
+    if (this == null) return null
+    return LocationModel(
+        latitude = this.latitude,
+        longitude = this.longitude,
+        city = this.city,
+        country = this.country,
+        timezone = this.timezone,
+        countryCode = this.countryCode,
+    )
+}
 
-    fun mapLocationEntityToDto(locationModel: LocationModel?): LocationDto? {
-        if (locationModel == null) return null
-        return LocationDto(
-            ip = locationModel.ip,
-            latitude = locationModel.latitude,
-            longitude = locationModel.longitude,
-            city = locationModel.city,
-            country = locationModel.country,
-            regionName = locationModel.regionName,
-            zip = locationModel.zip,
-            timezone = locationModel.timezone
-        )
-    }
+fun LocationModel?.toIpDto(): IpLocationDto? {
+    if (this == null) return null
+    return IpLocationDto(
+        latitude = this.latitude,
+        longitude = this.longitude,
+        city = this.city,
+        country = this.country,
+        timezone = this.timezone,
+        countryCode = this.countryCode,
+    )
+}
+
+fun GeoLocationDto?.toModel(): LocationModel? {
+    if (this == null) return null
+    return LocationModel(
+        latitude = this.latitude,
+        longitude = this.longitude,
+        city = this.city,
+        country = this.country,
+        timezone = this.timezone,
+        countryCode = this.countryCode,
+    )
+}
+
+fun LocationModel?.toGeoDto(): GeoLocationDto? {
+    if (this == null) return null
+    return GeoLocationDto(
+        latitude = this.latitude,
+        longitude = this.longitude,
+        city = this.city,
+        country = this.country,
+        timezone = this.timezone,
+        countryCode = this.countryCode,
+    )
 }

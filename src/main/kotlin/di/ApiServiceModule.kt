@@ -27,7 +27,7 @@ val apiServiceModule = module {
                 json(Json { ignoreUnknownKeys = true })
             }
             defaultRequest {
-                url("https://geocoding-api.open-meteo.com/v1/search?")
+                url("https://geocoding-api.open-meteo.com/v1/")
             }
         }
     }
