@@ -16,6 +16,8 @@ class LocationRepositoryImpl(
     }
 
     override suspend fun getLocationByCountryAndCity(country: String, city: String): LocationModel? {
-        TODO("Not yet implemented")
+        return locationMapper.mapLocationDtoToEntity(
+            locationDataSource.getLocationByCountryAndCity(country, city)
+        )
     }
 }
