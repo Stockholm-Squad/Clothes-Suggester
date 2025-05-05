@@ -20,7 +20,7 @@ class LocationDataSourceImpl(
         }
     }
 
-    override suspend fun getLocationByCountry(country: String, city: String): LocationDto? {
+    override suspend fun getLocationByCountryAndCity(country: String, city: String): LocationDto? {
         try {
             return geoApiClient.get("$city&$country").body<LocationDto?>()
         } catch (exception: Exception) {

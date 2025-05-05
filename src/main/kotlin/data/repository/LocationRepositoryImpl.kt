@@ -15,7 +15,7 @@ class LocationRepositoryImpl(
         )
     }
 
-    override suspend fun getLocationByCountry(country: String, city: String): LocationModel? {
+    override suspend fun getLocationByCountryAndCity(country: String, city: String): LocationModel? {
         TODO("Not yet implemented")
     }
 }

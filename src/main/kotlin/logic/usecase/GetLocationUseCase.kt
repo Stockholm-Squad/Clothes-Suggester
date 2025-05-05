@@ -11,8 +11,8 @@ class GetLocationUseCase(
         return locationRepository.getCurrentLocation()
     }
 
-    suspend fun getLocationByCountry(country: String?, city: String?): LocationModel? {
+    suspend fun getLocationByCountryAndCity(country: String?, city: String?): LocationModel? {
         if (country == null || city == null) throw InvalidInput()
-        return locationRepository.getLocationByCountry(country, city)
+        return locationRepository.getLocationByCountryAndCity(country, city)
     }
 }
