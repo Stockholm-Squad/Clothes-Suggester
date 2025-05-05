@@ -9,10 +9,16 @@ import org.example.data.repository.LocationRepositoryImpl
 import org.example.data.repository.WeatherRepositoryImpl
 import org.example.logic.repository.LocationRepository
 import org.example.logic.repository.WeatherRepository
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val dataModule = module {
-    factory<LocationDataSource> { LocationDataSourceImpl(get()) }
+    factory<LocationDataSource> {
+        LocationDataSourceImpl(
+            ipApiClient = get(named("ipApiClient")),
+            geoApiClient = get(named("geoApiClient"))
+        )
+    }
     factory<WeatherDataSource> { WeatherDataSourceImpl() }
 
     factory<LocationRepository> { LocationRepositoryImpl(get(), get()) }
