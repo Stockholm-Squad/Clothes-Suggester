@@ -1,7 +1,12 @@
 package logic.model
 
-//TODO add any needed data here
-data class LocationModel (
+data class LocationModel(
+    val ip: String,
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val city: String,
+    val country: String,
+    val regionName: String,
+    val zip: String,
+    val timezone: String
 )
