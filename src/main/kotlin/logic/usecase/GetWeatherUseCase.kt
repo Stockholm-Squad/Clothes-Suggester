@@ -8,8 +8,7 @@ class GetWeatherUseCase (
     private val weatherRepository: WeatherRepository
 ){
     suspend fun getWeather(): Double ?{
-        val location=locationRepository.getCurrentLocation()
-        val weather= weatherRepository.getWeather(location)
+        val weather= weatherRepository.getWeather()
         val temperature=weather?.daily?.temperatureMax
         return temperature?.first()
     }
