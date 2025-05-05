@@ -4,6 +4,7 @@ import org.example.data.datasource.LocationDataSource
 import org.example.data.datasource.LocationDataSourceImpl
 import org.example.data.datasource.WeatherDataSource
 import org.example.data.datasource.WeatherDataSourceImpl
+import org.example.data.mapper.LocationMapper
 import org.example.data.repository.LocationRepositoryImpl
 import org.example.data.repository.WeatherRepositoryImpl
 import org.example.logic.repository.LocationRepository
@@ -14,6 +15,8 @@ val dataModule = module {
     factory<LocationDataSource> { LocationDataSourceImpl() }
     factory<WeatherDataSource> { WeatherDataSourceImpl() }
 
-    factory<LocationRepository> { LocationRepositoryImpl(get()) }
+    factory<LocationRepository> { LocationRepositoryImpl(get(), get()) }
     factory<WeatherRepository> { WeatherRepositoryImpl(get()) }
+
+    factory { LocationMapper() }
 }
