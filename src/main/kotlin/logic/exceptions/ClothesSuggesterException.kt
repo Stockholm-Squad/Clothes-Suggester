@@ -1,4 +1,4 @@
 package org.example.logic.exceptions
 
-class LoadingDataException : Exception("Error while loading data")
+class NoLocationFoundException : Exception("No Location found")
 class InvalidInput : Exception("Invalid input")
