@@ -3,12 +3,14 @@ package logic.usecase
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import logic.model.LocationModel
 import logic.model.WeatherModel
+import org.example.logic.exceptions.LoadingDataException
 import org.example.logic.repository.WeatherRepository
 import org.example.logic.usecase.GetWeatherUseCase
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 
 
@@ -24,12 +26,13 @@ class GetWeatherUseCaseTest {
     }
 
     @Test
-    fun `getWeatherOfDay() should return Temperature correctly when repo succeeds`() = runBlocking {
+    fun `getWeatherOfDay() should return weather correctly when repo succeeds`() = runTest {
 
         // Given
-        val excepted=30.0
+        val excepted= WeatherModel(date="2025-05-06", maxTemp=34.4, minTemp=20.6, maxWindSpeed=23.0)
+
         val weatherModel = listOf(
-            WeatherModel("2025-05-05", 30.0, 20.0, 10.0)
+            WeatherModel(date="2025-05-06", maxTemp=34.4, minTemp=20.6, maxWindSpeed=23.0)
         )
 
 
@@ -40,6 +43,20 @@ class GetWeatherUseCaseTest {
 
         // Then
         assertThat(result).isEqualTo(excepted)
+    }
+
+    @Test
+    fun `getWeatherOfDay() should throw exception when repo fails`() = runTest {
+
+        // Given
+
+        coEvery { weatherRepository.getWeather(LocationModel(26.6, 31.7, "Africa/Cairo")) } throws LoadingDataException()
+
+
+
+        // When & Then
+        assertThrows<LoadingDataException> {getWeatherUseCase.getWeatherOfDay(LocationModel(26.6, 31.7, "Africa/Cairo"))
+        }
     }
 
 }
