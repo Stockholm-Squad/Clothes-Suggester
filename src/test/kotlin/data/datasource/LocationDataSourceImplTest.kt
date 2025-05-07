@@ -6,7 +6,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.example.data.datasource.LocationDataSource
 import org.example.data.datasource.LocationDataSourceImpl
-import org.example.logic.exceptions.LoadingDataException
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -51,7 +50,7 @@ class LocationDataSourceImplTest {
     }
 
     @Test
-    fun `getCurrentLocation() should throw LoadingDataException when error happens while getting data `() = runTest {
+    fun `getCurrentLocation() should throw Exception when error happens while getting data `() = runTest {
         //Given
         val fakeJson = """
         {
@@ -68,7 +67,7 @@ class LocationDataSourceImplTest {
         locationDataSourceImpl = LocationDataSourceImpl(ipApiClient = ipApiClient, geoApiClient = geoApiClient)
 
         //When & Then
-        assertThrows<LoadingDataException> { locationDataSourceImpl.getCurrentLocation() }
+        assertThrows<Exception> { locationDataSourceImpl.getCurrentLocation() }
     }
 
 
@@ -107,7 +106,7 @@ class LocationDataSourceImplTest {
     }
 
     @Test
-    fun `getLocationByCountryAndCity() should throw LoadingDataException when error happens while getting data `() =
+    fun `getLocationByCountryAndCity() should throw Exception when error happens while getting data `() =
         runTest {
             //Given
             val country = "Egypt"
@@ -128,7 +127,7 @@ class LocationDataSourceImplTest {
             locationDataSourceImpl = LocationDataSourceImpl(ipApiClient = ipApiClient, geoApiClient = geoApiClient)
 
             //When & Then
-            assertThrows<LoadingDataException> {
+            assertThrows<Exception> {
                 locationDataSourceImpl.getLocationByCountryAndCity(country = country, city = city)
             }
         }

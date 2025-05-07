@@ -6,6 +6,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import logic.model.LocationModel
 import org.example.logic.exceptions.InvalidInput
+import org.example.logic.exceptions.NoWeatherFoundException
 import org.example.logic.repository.LocationRepository
 import org.example.logic.usecase.GetLocationUseCase
 import org.junit.jupiter.api.BeforeEach
@@ -76,7 +77,7 @@ class GetLocationUseCaseTest {
     }
 
     @Test
-    fun `getLocationByCountryAndCity() should throw LoadingDataException when repo throw exception`() = runTest {
+    fun `getLocationByCountryAndCity() should throw NoWeatherFoundException when repo throw exception`() = runTest {
         //Given
         val county = "Egypt"
         val city = "city"
@@ -85,10 +86,10 @@ class GetLocationUseCaseTest {
                 country = county,
                 city = city
             )
-        } throws Exception()
+        } throws NoWeatherFoundException()
 
         //When & Then
-        assertThrows<Exception> {
+        assertThrows<NoWeatherFoundException> {
             getLocationUseCase.getLocationByCountryAndCity(
                 country = county,
                 city = city
