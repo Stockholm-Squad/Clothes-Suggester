@@ -6,7 +6,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.example.data.datasource.LocationDataSource
 import org.example.data.datasource.LocationDataSourceImpl
-import org.example.logic.exceptions.LoadingDataException
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

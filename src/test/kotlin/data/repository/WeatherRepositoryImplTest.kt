@@ -11,7 +11,7 @@ import logic.model.WeatherModel
 import org.example.data.datasource.WeatherDataSource
 import org.example.data.dto.DailyDto
 import org.example.data.repository.WeatherRepositoryImpl
-import org.example.logic.exceptions.LoadingDataException
+import org.example.logic.exceptions.NoWeatherFoundException
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
@@ -69,10 +69,10 @@ class WeatherRepositoryImplTest {
         // Given
         coEvery {
             weatherDataSource.getWeather(location)
-        } throws LoadingDataException()
+        } throws NoWeatherFoundException()
 
         // When & Then
-        assertThrows<LoadingDataException> {
+        assertThrows<NoWeatherFoundException> {
             weatherRepositoryImpl.getWeather(location)
         }
     }

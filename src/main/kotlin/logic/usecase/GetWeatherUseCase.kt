@@ -2,7 +2,7 @@ package org.example.logic.usecase
 
 import logic.model.LocationModel
 import logic.model.WeatherModel
-import org.example.logic.exceptions.LoadingDataException
+import org.example.logic.exceptions.NoWeatherFoundException
 import org.example.logic.repository.WeatherRepository
 
 class GetWeatherUseCase(
@@ -14,7 +14,7 @@ class GetWeatherUseCase(
             return weather.first()
         } catch (exception: Exception) {
             exception.printStackTrace()
-            throw LoadingDataException()
+            throw NoWeatherFoundException()
         }
 
     }

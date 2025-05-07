@@ -7,7 +7,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import logic.model.LocationModel
 import logic.model.WeatherModel
-import org.example.logic.exceptions.LoadingDataException
+import org.example.logic.exceptions.NoWeatherFoundException
 import org.example.logic.repository.WeatherRepository
 import org.example.logic.usecase.GetWeatherUseCase
 import org.junit.jupiter.api.BeforeEach
@@ -47,10 +47,10 @@ class GetWeatherUseCaseTest {
     @Test
     fun `getWeatherOfDay() should throw exception when repo fails`() = runTest {
         // Given
-        coEvery { weatherRepository.getWeather(location) } throws LoadingDataException()
+        coEvery { weatherRepository.getWeather(location) } throws NoWeatherFoundException()
 
         // When & Then
-        assertThrows<LoadingDataException> {
+        assertThrows<NoWeatherFoundException> {
             getWeatherUseCase.getWeatherOfDay(location)
         }
     }
