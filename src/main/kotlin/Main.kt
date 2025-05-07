@@ -1,5 +1,6 @@
 package org.example
 
+import kotlinx.coroutines.runBlocking
 import org.example.di.appModule
 import org.example.ui.SuggesterClothesConsole
 import org.koin.core.context.startKoin
@@ -13,5 +14,7 @@ fun main() {
     }
 
     val suggesterClothesConsole = getKoin().get<SuggesterClothesConsole>()
-
+    runBlocking {
+        suggesterClothesConsole.launch()
+    }
 }
