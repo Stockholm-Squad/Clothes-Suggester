@@ -35,9 +35,14 @@ kotlin {
 
 fun testingDependencies() {
     dependencies {
+        testImplementation("io.ktor:ktor-client-mock:2.3.7")
+        testImplementation("io.ktor:ktor-client-content-negotiation:2.3.7")
         testImplementation("io.mockk:mockk:1.13.9")
         testImplementation("com.google.truth:truth:1.4.2")
         testImplementation("io.kotest:kotest-assertions-core:5.8.0")
+
+        testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+        testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     }
 }
 
