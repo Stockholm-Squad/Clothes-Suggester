@@ -53,7 +53,7 @@ class SuggesterClothesConsole(
         try {
             val location = getLocationUseCase.getCurrentLocation()
             if (location != null) {
-                val weather = getWeatherUseCase.getWeather(location)
+                val weather = getWeatherUseCase.getWeatherOfDay(location)
                 if (weather != null) {
                     showSuitableClothes(
                         weather.minTemp,
@@ -80,7 +80,7 @@ class SuggesterClothesConsole(
 
             val location = getLocationUseCase.getLocationByCountryAndCity(country, city)
             if (location != null) {
-                val weather = getWeatherUseCase.getWeather(location)
+                val weather = getWeatherUseCase.getWeatherOfDay(location)
                 if (weather != null) {
                     showSuitableClothes(
                         weather.minTemp,
