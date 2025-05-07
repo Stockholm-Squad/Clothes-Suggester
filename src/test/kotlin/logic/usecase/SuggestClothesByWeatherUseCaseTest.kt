@@ -5,6 +5,8 @@ import logic.model.WeatherModel
 import org.example.logic.usecase.SuggestClothesByWeatherUseCase
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class SuggestClothesByWeatherUseCaseTest {
 
@@ -34,13 +36,20 @@ class SuggestClothesByWeatherUseCaseTest {
         ).inOrder()
     }
 
-    @Test
-    fun `returns winter clothes for min below -5 and max at most 5`() {
+    @ParameterizedTest
+    @CsvSource(
+        "-5.0,5.0",
+        "-5.0,4.0",
+    )
+    fun `returns winter clothes for min below -5 and max at most 5`(
+        minTemp: Double,
+        maxTemp: Double
+    ) {
         //Given
         val weatherModel = WeatherModel(
             date = "",
-            maxTemp = 5.0,
-            minTemp = -5.0,
+            maxTemp = maxTemp,
+            minTemp = minTemp,
             maxWindSpeed = 7.8
         )
 
@@ -53,13 +62,23 @@ class SuggestClothesByWeatherUseCaseTest {
         ).inOrder()
     }
 
-    @Test
-    fun `returns mid-weight jacket for min at 0 and max at 9`() {
+    @ParameterizedTest
+    @CsvSource(
+        "0.0,9.0",
+        "5.0,10.0",
+        "5.0,9.0",
+        "4.0,10.0",
+        "4.0,9.0",
+    )
+    fun `returns mid-weight jacket for min at 0 and max at 9`(
+        minTemp: Double,
+        maxTemp: Double
+    ) {
         //Given
         val weatherModel = WeatherModel(
             date = "",
-            maxTemp = 9.0,
-            minTemp = 0.0,
+            maxTemp = maxTemp,
+            minTemp = minTemp,
             maxWindSpeed = 7.8
         )
 
