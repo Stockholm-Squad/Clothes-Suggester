@@ -33,4 +33,18 @@ val apiServiceModule = module {
         }
     }
 
+    single(named("weatherClient")) {
+        HttpClient(CIO)
+        {
+            install(ContentNegotiation) {
+                json(Json {
+                    ignoreUnknownKeys = true
+                })
+            }
+            defaultRequest {
+                url("https://api.open-meteo.com/v1/")
+            }
+
+        }
+    }
 }
