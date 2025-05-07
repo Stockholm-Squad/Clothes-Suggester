@@ -9,6 +9,7 @@ import org.example.data.dto.GeoLocationDto
 import org.example.data.dto.IpLocationDto
 import org.example.data.repository.LocationRepositoryImpl
 import org.example.logic.exceptions.LoadingDataException
+import org.example.logic.exceptions.NoLocationFoundException
 import org.example.logic.repository.LocationRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -46,12 +47,12 @@ class LocationRepositoryImplTest {
     }
 
     @Test
-    fun `getCurrentLocation() should throw LoadingDataException when datasource failed to get the data`() = runTest {
+    fun `getCurrentLocation() should throw NoLocationFoundException when datasource failed to get the data`() = runTest {
         //Given
-        coEvery { locationDataSource.getCurrentLocation() } throws LoadingDataException()
+        coEvery { locationDataSource.getCurrentLocation() } throws NoLocationFoundException()
 
         //When & Then
-        assertThrows<LoadingDataException> { locationRepository.getCurrentLocation() }
+        assertThrows<NoLocationFoundException> { locationRepository.getCurrentLocation() }
     }
 
 
@@ -86,7 +87,7 @@ class LocationRepositoryImplTest {
         }
 
     @Test
-    fun `getLocationByCountryAndCity() should throw LoadingDataException when datasource failed to get the data`() =
+    fun `getLocationByCountryAndCity() should throw NoLocationFoundException when datasource failed to get the data`() =
         runTest {
             //Given
             val country = "Egypt"
@@ -96,10 +97,10 @@ class LocationRepositoryImplTest {
                     country = country,
                     city = city
                 )
-            } throws LoadingDataException()
+            } throws NoLocationFoundException()
 
             //When & Then
-            assertThrows<LoadingDataException> {
+            assertThrows<NoLocationFoundException> {
                 locationRepository.getLocationByCountryAndCity(
                     country = country,
                     city = city
