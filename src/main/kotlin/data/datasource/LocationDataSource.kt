@@ -1,8 +1,9 @@
 package org.example.data.datasource
 
-import logic.model.LocationModel
+import org.example.data.dto.GeoLocationDto
+import org.example.data.dto.IpLocationDto
 
 interface LocationDataSource {
-    suspend fun getCurrentLocation(): LocationModel?
-    suspend fun getLocationByCountry(country: String): LocationModel?
+    suspend fun getCurrentLocation(): IpLocationDto?
+    suspend fun getLocationByCountryAndCity(country: String, city: String): List<GeoLocationDto?>?
 }

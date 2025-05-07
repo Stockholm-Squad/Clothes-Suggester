@@ -1,8 +1,10 @@
 package logic.model
 
-
-data class LocationModel (
-     val lat: Double,
-    val lon: Double,
-    val date: String
+data class LocationModel(
+    val latitude: Double?,
+    val longitude: Double?,
+    val city: String?,
+    val country: String?,
+    val countryCode: String?,
+    val timezone: String?
 )
