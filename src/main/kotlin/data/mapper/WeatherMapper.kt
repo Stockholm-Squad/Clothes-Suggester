@@ -2,15 +2,22 @@ package org.example.data.mapper
 
 import WeatherDto
 import logic.model.WeatherModel
+fun WeatherDto.toWeatherModelList(): List<WeatherModel> {
+    val times = daily?.time
+    val maxTemps = daily?.temperatureMax
+    val minTemps = daily?.temperatureMin
+    val windSpeeds = daily?.windSpeed
 
-fun WeatherDto.toWeatherModelList(): List<WeatherModel>{
-    return  daily.time.indices.map { index->
+    if (times.isNullOrEmpty() || maxTemps.isNullOrEmpty() || minTemps.isNullOrEmpty() || windSpeeds.isNullOrEmpty()) {
+        return emptyList()
+    }
+
+    return times.indices.map { index ->
         WeatherModel(
-            date =daily.time[index],
-            maxTemp = daily.temperatureMax.getOrElse(index){0.0},
-            minTemp = daily.temperatureMin.getOrElse(index){0.0},
-            maxWindSpeed = daily.windSpeed.getOrElse(index){0.0}
+            date = times.getOrElse(index) { "" },
+            maxTemp = maxTemps.getOrElse(index) { 0.0 },
+            minTemp = minTemps.getOrElse(index) { 0.0 },
+            maxWindSpeed = windSpeeds.getOrElse(index) { 0.0 }
         )
-
     }
 }
