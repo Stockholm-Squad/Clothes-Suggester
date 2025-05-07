@@ -6,5 +6,3 @@ data class WeatherModel(
     val minTemp: Double,
     val maxWindSpeed: Double
 )
-
-
