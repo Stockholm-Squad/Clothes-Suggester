@@ -2,7 +2,9 @@ package org.example.data.mapper
 
 import WeatherDto
 import logic.model.WeatherModel
-fun WeatherDto.toWeatherModelList(): List<WeatherModel> {
+
+fun WeatherDto?.toWeatherModelList(): List<WeatherModel> {
+    if (this == null) return emptyList()
     val times = daily?.time
     val maxTemps = daily?.temperatureMax
     val minTemps = daily?.temperatureMin
