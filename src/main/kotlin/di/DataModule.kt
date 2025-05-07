@@ -18,7 +18,7 @@ val dataModule = module {
             geoApiClient = get(named("geoApiClient"))
         )
     }
-    factory<WeatherDataSource> { WeatherDataSourceImpl(get (named("weatherClient"))) }
+    factory<WeatherDataSource> { WeatherDataSourceImpl(get (named("geoApiClient"))) }
 
     factory<LocationRepository> { LocationRepositoryImpl(get()) }
     factory<WeatherRepository> { WeatherRepositoryImpl(get()) }
