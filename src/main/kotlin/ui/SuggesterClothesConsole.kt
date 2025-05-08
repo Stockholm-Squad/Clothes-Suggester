@@ -32,6 +32,7 @@ class SuggesterClothesConsole(
 
                 else -> showInputFailure()
             }
+
         }
     }
 
