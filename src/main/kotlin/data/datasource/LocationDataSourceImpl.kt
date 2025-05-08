@@ -4,7 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import org.example.data.dto.GeoLocationDto
-import org.example.data.dto.GeoLocationResponse
+import org.example.data.dto.GeoLocationResponseDto
 import org.example.data.dto.IpLocationDto
 
 class LocationDataSourceImpl(
@@ -20,6 +20,6 @@ class LocationDataSourceImpl(
         return geoApiClient.get("search") {
             parameter("country", country)
             parameter("name", city)
-        }.body<GeoLocationResponse>().results
+        }.body<GeoLocationResponseDto?>()?.results
     }
 }
