@@ -23,6 +23,6 @@ class LocationDataSourceImpl(
             .get("search") {
                 parameter("country", country)
                 parameter("name", city)
-            }.body<GeoLocationResponseDto?>?().results
+            }.body<GeoLocationResponseDto?>()?.results
     }
 }
