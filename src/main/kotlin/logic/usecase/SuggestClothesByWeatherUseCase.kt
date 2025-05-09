@@ -1,6 +1,7 @@
 package org.example.logic.usecase
 
 import logic.model.WeatherModel
+import org.example.logic.model.ClothingType
 
 class SuggestClothesByWeatherUseCase {
 
@@ -8,19 +9,28 @@ class SuggestClothesByWeatherUseCase {
         val maxTemp = weatherModel.maxTemp
         val minTemp = weatherModel.minTemp
 
-        return when {
-            maxTemp < -5 -> getOutfitForTempLessThanNegativeFive()
-            minTemp <= -5 && maxTemp <= 5 -> getOutfitForTempLessThanOrEqualFive()
-            minTemp <= 5 && maxTemp <= 10 -> getOutfitForTempLessThanOrEqualTen()
-            minTemp <= 10 && maxTemp <= 15 -> getOutfitForTempLessThanOrEqualFifteen()
-            minTemp <= 15 && maxTemp <= 20 -> getOutfitForTempLessThanOrEqualTwenty()
-            minTemp <= 20 && maxTemp <= 25 -> getOutfitForTempLessThanOrEqualTwentyFive()
-            minTemp <= 25 && maxTemp <= 30 -> getOutfitForTempLessThanOrEqualThirty()
-            else -> getOutfitForTempMoreThanThirty()
+        val averageTemp = (minTemp + maxTemp) / 2
+        val clothingType = getClothingTypeFromAverageTemp(averageTemp)
+        return when (clothingType) {
+            ClothingType.HEAVY_WINTER -> getOutfitForHeavyWinter()
+            ClothingType.WINTER -> getOutfitForWinter()
+            ClothingType.MID_SEASON -> getOutfitForMidSeason()
+            ClothingType.LIGHT_JACKET -> getOutfitForLightJacket()
+            ClothingType.CASUAL -> getOutfitForCasual()
+            ClothingType.SUMMER -> getOutfitForSummer()
         }
     }
 
-    private fun getOutfitForTempMoreThanThirty() = listOf(
+    private fun getClothingTypeFromAverageTemp(avgTemp: Double): ClothingType = when {
+        avgTemp < -5 -> ClothingType.HEAVY_WINTER
+        avgTemp <= 5 -> ClothingType.WINTER
+        avgTemp <= 10 -> ClothingType.MID_SEASON
+        avgTemp <= 15 -> ClothingType.LIGHT_JACKET
+        avgTemp <= 25 -> ClothingType.CASUAL
+        else -> ClothingType.SUMMER
+    }
+
+    private fun getOutfitForSummer() = listOf(
         "Tank tops",
         "Shorts",
         "Sun hat",
@@ -29,37 +39,25 @@ class SuggestClothesByWeatherUseCase {
         "Sandals or light shoes"
     )
 
-    private fun getOutfitForTempLessThanOrEqualThirty() = listOf(
-        "Short sleeves",
-        "Shorts or skirt",
-        "Breathable fabrics (cotton/linen)"
-    )
-
-    private fun getOutfitForTempLessThanOrEqualTwentyFive() = listOf(
+    private fun getOutfitForCasual() = listOf(
         "T-shirt or polo",
         "Shorts or light pants",
         "Optional light sweater in the morning"
     )
 
-    private fun getOutfitForTempLessThanOrEqualTwenty() = listOf(
+    private fun getOutfitForMidSeason() = listOf(
         "Light jacket or sweatshirt",
         "T-shirt or long-sleeve shirt",
         "Jeans or light pants"
     )
 
-    private fun getOutfitForTempLessThanOrEqualFifteen() = listOf(
+    private fun getOutfitForLightJacket() = listOf(
         "Light jacket or coat",
         "Long-sleeve shirt",
         "Pants"
     )
 
-    private fun getOutfitForTempLessThanOrEqualTen() = listOf(
-        "Mid-weight jacket",
-        "Sweater or hoodie",
-        "Jeans or trousers"
-    )
-
-    private fun getOutfitForTempLessThanOrEqualFive() = listOf(
+    private fun getOutfitForWinter() = listOf(
         "Winter coat",
         "Sweater or fleece",
         "Warm pants",
@@ -67,7 +65,7 @@ class SuggestClothesByWeatherUseCase {
         "Gloves"
     )
 
-    private fun getOutfitForTempLessThanNegativeFive() = listOf(
+    private fun getOutfitForHeavyWinter() = listOf(
         "Heavy winter coat",
         "Thermal layers",
         "Scarf",
