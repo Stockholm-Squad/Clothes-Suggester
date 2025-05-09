@@ -2,23 +2,19 @@ package org.example.logic.usecase
 
 import logic.model.WeatherModel
 import org.example.logic.model.ClothingType
+import org.example.logic.repository.OutfitRepository
 
-class SuggestClothesByWeatherUseCase {
+class SuggestClothesByWeatherUseCase(
+    private val repository: OutfitRepository
+) {
 
-    fun suggestClothesByWeather(weatherModel: WeatherModel): List<String> {
+    suspend fun suggestClothesByWeather(weatherModel: WeatherModel): List<String> {
         val maxTemp = weatherModel.maxTemp
         val minTemp = weatherModel.minTemp
 
         val averageTemp = (minTemp + maxTemp) / 2
         val clothingType = getClothingTypeFromAverageTemp(averageTemp)
-        return when (clothingType) {
-            ClothingType.HEAVY_WINTER -> getOutfitForHeavyWinter()
-            ClothingType.WINTER -> getOutfitForWinter()
-            ClothingType.MID_SEASON -> getOutfitForMidSeason()
-            ClothingType.LIGHT_JACKET -> getOutfitForLightJacket()
-            ClothingType.CASUAL -> getOutfitForCasual()
-            ClothingType.SUMMER -> getOutfitForSummer()
-        }
+        return repository.getOutfitForClothingType(clothingType).items
     }
 
     private fun getClothingTypeFromAverageTemp(avgTemp: Double): ClothingType = when {
@@ -29,48 +25,4 @@ class SuggestClothesByWeatherUseCase {
         avgTemp <= 25 -> ClothingType.CASUAL
         else -> ClothingType.SUMMER
     }
-
-    private fun getOutfitForSummer() = listOf(
-        "Tank tops",
-        "Shorts",
-        "Sun hat",
-        "Sunglasses",
-        "Sunscreen",
-        "Sandals or light shoes"
-    )
-
-    private fun getOutfitForCasual() = listOf(
-        "T-shirt or polo",
-        "Shorts or light pants",
-        "Optional light sweater in the morning"
-    )
-
-    private fun getOutfitForMidSeason() = listOf(
-        "Light jacket or sweatshirt",
-        "T-shirt or long-sleeve shirt",
-        "Jeans or light pants"
-    )
-
-    private fun getOutfitForLightJacket() = listOf(
-        "Light jacket or coat",
-        "Long-sleeve shirt",
-        "Pants"
-    )
-
-    private fun getOutfitForWinter() = listOf(
-        "Winter coat",
-        "Sweater or fleece",
-        "Warm pants",
-        "Hat",
-        "Gloves"
-    )
-
-    private fun getOutfitForHeavyWinter() = listOf(
-        "Heavy winter coat",
-        "Thermal layers",
-        "Scarf",
-        "Gloves",
-        "Hat",
-        "Insulated boots"
-    )
 }

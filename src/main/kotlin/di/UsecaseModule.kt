@@ -8,5 +8,5 @@ import org.koin.dsl.module
 val useCaseMode = module {
     factory { GetLocationUseCase(get()) }
     factory { GetWeatherUseCase(get()) }
-    factory { SuggestClothesByWeatherUseCase() }
+    factory { SuggestClothesByWeatherUseCase(get()) }
 }
