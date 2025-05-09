@@ -10,14 +10,14 @@ class WeatherDataSourceImpl(
     private val httpClientProvider: HttpClientProvider,
     private val weatherLink: String
 ) : WeatherDataSource {
-    override suspend fun getWeather(locationModel: LocationModel): WeatherDto {
+    override suspend fun getWeather(locationModel: LocationModel): WeatherDto? {
         return httpClientProvider.createHttpClient(weatherLink).get("forecast") {
             parameter("latitude", locationModel.latitude)
             parameter("longitude", locationModel.longitude)
             parameter("daily", "temperature_2m_max")
             parameter("daily", "windspeed_10m_max")
             parameter("daily", "temperature_2m_min")
-        }.body<WeatherDto>()
+        }.body<WeatherDto?>()
 
     }
 }

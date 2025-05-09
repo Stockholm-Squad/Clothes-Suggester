@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
+import logic.model.WeatherModel
 import org.example.logic.usecase.GetLocationUseCase
 import org.example.logic.usecase.GetWeatherUseCase
 import org.example.logic.usecase.SuggestClothesByWeatherUseCase
@@ -54,15 +55,11 @@ class SuggesterClothesConsole(
             val location = getLocationUseCase.getCurrentLocation()
             if (location != null) {
                 val weather = getWeatherUseCase.getWeatherOfDay(location)
-                if (weather != null) {
-                    showSuitableClothes(
-                        weather.minTemp,
-                        weather.maxTemp,
-                        suggestClothesByWeatherUseCase.suggestClothesByWeather(weather)
-                    )
-                } else {
-                    println("Error while getting weather, Please try again ^_^")
-                }
+                showSuitableClothes(
+                    weather.minTemp,
+                    weather.maxTemp,
+                    suggestClothesByWeatherUseCase.suggestClothesByWeather(weather)
+                )
             } else {
                 println("Error while getting location, Please try again ^_^")
             }
@@ -80,16 +77,12 @@ class SuggesterClothesConsole(
 
             val location = getLocationUseCase.getLocationByCountryAndCity(country, city)
             if (location != null) {
-                val weather = getWeatherUseCase.getWeatherOfDay(location)
-                if (weather != null) {
-                    showSuitableClothes(
-                        weather.minTemp,
-                        weather.maxTemp,
-                        suggestClothesByWeatherUseCase.suggestClothesByWeather(weather)
-                    )
-                } else {
-                    println("Error while getting weather, Please try again ^_^")
-                }
+                val weather: WeatherModel = getWeatherUseCase.getWeatherOfDay(location)
+                showSuitableClothes(
+                    weather.minTemp,
+                    weather.maxTemp,
+                    suggestClothesByWeatherUseCase.suggestClothesByWeather(weather)
+                )
             } else {
                 println("Error while getting location, Please try again ^_^")
             }
@@ -98,7 +91,8 @@ class SuggesterClothesConsole(
         }
     }
 
-    private fun showSuitableClothes(minTemp: Double, maxTemp: Double, suggestions: List<String>) {
+    private fun showSuitableClothes(minTemp: Double?, maxTemp: Double?, suggestions: List<String>) {
+        if (minTemp == null || maxTemp == null) println("Error while getting weather, Please try again ^_^")
         println("Clothing suggestions for min: $minTemp°C, max: $maxTemp°C")
         suggestions.forEach { println("- $it") }
     }

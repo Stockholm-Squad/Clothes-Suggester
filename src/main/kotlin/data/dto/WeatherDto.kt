@@ -1,11 +1,12 @@
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.example.data.dto.DailyDto
 
 @Serializable
 data class WeatherDto(
-    val latitude: Double?,
-    val longitude: Double?,
-    val timezone: String?,
-    val daily: DailyDto?
+    @SerialName("latitude") val latitude: Double?,
+    @SerialName("longitude") val longitude: Double?,
+    @SerialName("timezone") val timezone: String?,
+    @SerialName("daily") val daily: DailyDto?
 )
 

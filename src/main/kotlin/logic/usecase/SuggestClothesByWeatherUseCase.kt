@@ -1,12 +1,13 @@
 package org.example.logic.usecase
 
 import logic.model.WeatherModel
+import org.example.logic.exceptions.NoWeatherFoundException
 
 class SuggestClothesByWeatherUseCase {
 
     fun suggestClothesByWeather(weatherModel: WeatherModel): List<String> {
-        val maxTemp = weatherModel.maxTemp
-        val minTemp = weatherModel.minTemp
+        val maxTemp = weatherModel.maxTemp ?: throw NoWeatherFoundException()
+        val minTemp = weatherModel.minTemp ?: throw NoWeatherFoundException()
 
         return when {
             maxTemp < -5 -> getOutfitForTempLessThanNegativeFive()
