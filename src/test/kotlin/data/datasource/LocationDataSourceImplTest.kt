@@ -1,9 +1,10 @@
 package data.datasource
 
 import com.google.common.truth.Truth.assertThat
-import io.ktor.client.*
+import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import org.example.data.apiservice.HttpClientProvider
 import org.example.data.datasource.location.LocationDataSource
 import org.example.data.datasource.location.LocationDataSourceImpl
 import org.junit.jupiter.api.BeforeEach
@@ -11,15 +12,17 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class LocationDataSourceImplTest {
-    private lateinit var ipApiClient: HttpClient
-    private lateinit var geoApiClient: HttpClient
     private lateinit var locationDataSourceImpl: LocationDataSource
+    private lateinit var httpClientProvider: HttpClientProvider
+    private lateinit var ipLocationLink: String
+    private lateinit var geoLocationLink: String
 
     @BeforeEach
     fun setUp() {
-        ipApiClient = mockk()
-        geoApiClient = mockk()
-        locationDataSourceImpl = LocationDataSourceImpl(ipApiClient, geoApiClient)
+        httpClientProvider = mockk(relaxed = true)
+        ipLocationLink = ""
+        geoLocationLink = ""
+        locationDataSourceImpl = LocationDataSourceImpl(httpClientProvider, ipLocationLink, geoLocationLink)
     }
 
     @Test
@@ -36,9 +39,8 @@ class LocationDataSourceImplTest {
             "timezone": "UTC"
         }
     """
-
-        ipApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
-        locationDataSourceImpl = LocationDataSourceImpl(ipApiClient = ipApiClient, geoApiClient = geoApiClient)
+        val ipApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
+        coEvery { httpClientProvider.createHttpClient(ipLocationLink) } returns ipApiClient
 
         //When
         val result = locationDataSourceImpl.getCurrentLocation()
@@ -63,8 +65,8 @@ class LocationDataSourceImplTest {
             "timezone": "UTC"
         }
     """
-        ipApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
-        locationDataSourceImpl = LocationDataSourceImpl(ipApiClient = ipApiClient, geoApiClient = geoApiClient)
+        val ipApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
+        coEvery { httpClientProvider.createHttpClient(ipLocationLink) } returns ipApiClient
 
         //When & Then
         assertThrows<Exception> { locationDataSourceImpl.getCurrentLocation() }
@@ -93,8 +95,8 @@ class LocationDataSourceImplTest {
         }
     """
 
-        geoApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
-        locationDataSourceImpl = LocationDataSourceImpl(ipApiClient = ipApiClient, geoApiClient = geoApiClient)
+        val geoApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
+        coEvery { httpClientProvider.createHttpClient(geoLocationLink) } returns geoApiClient
 
         //When
         val result = locationDataSourceImpl.getLocationByCountryAndCity(country = country, city = city)
@@ -123,8 +125,8 @@ class LocationDataSourceImplTest {
                 "timezone": "UTC"
             }
         """
-            geoApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
-            locationDataSourceImpl = LocationDataSourceImpl(ipApiClient = ipApiClient, geoApiClient = geoApiClient)
+            val geoApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
+            coEvery { httpClientProvider.createHttpClient(geoLocationLink) } returns geoApiClient
 
             //When & Then
             assertThrows<Exception> {

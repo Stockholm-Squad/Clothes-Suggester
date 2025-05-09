@@ -3,14 +3,15 @@ package org.example.logic.usecase
 import logic.model.WeatherModel
 import org.example.logic.model.ClothingType
 import org.example.logic.repository.OutfitRepository
+import org.example.logic.exceptions.NoWeatherFoundException
 
 class SuggestClothesByWeatherUseCase(
     private val repository: OutfitRepository
 ) {
 
-    suspend fun suggestClothesByWeather(weatherModel: WeatherModel): List<String> {
-        val maxTemp = weatherModel.maxTemp
-        val minTemp = weatherModel.minTemp
+   suspend fun suggestClothesByWeather(weatherModel: WeatherModel): List<String> {
+        val maxTemp = weatherModel.maxTemp ?: throw NoWeatherFoundException()
+        val minTemp = weatherModel.minTemp ?: throw NoWeatherFoundException()
 
         val averageTemp = (minTemp + maxTemp) / 2
         val clothingType = getClothingTypeFromAverageTemp(averageTemp)

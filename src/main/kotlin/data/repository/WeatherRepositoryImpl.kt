@@ -10,7 +10,7 @@ import org.example.logic.repository.WeatherRepository
 class WeatherRepositoryImpl(
     private val weatherDataSource: WeatherDataSource,
 ) : WeatherRepository, BaseRepository() {
-    override suspend fun getWeather(locationModel: LocationModel): List<WeatherModel> = tryCatch(
+    override suspend fun getWeather(locationModel: LocationModel): List<WeatherModel?>? = tryCatch(
         onSuccess = { weatherDataSource.getWeather(locationModel).toWeatherModelList() },
         onFailure = { throw NoWeatherFoundException() }
     )

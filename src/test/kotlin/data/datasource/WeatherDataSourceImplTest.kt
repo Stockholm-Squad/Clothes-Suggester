@@ -4,8 +4,12 @@ package data.datasource
 import WeatherDto
 import com.google.common.truth.Truth.assertThat
 import io.ktor.client.*
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import logic.model.LocationModel
+import org.example.data.apiservice.HttpClientProvider
+import org.example.data.datasource.weather.WeatherDataSource
 import org.example.data.datasource.weather.WeatherDataSourceImpl
 import org.example.data.dto.DailyDto
 import org.junit.jupiter.api.BeforeEach
@@ -14,13 +18,17 @@ import org.junit.jupiter.api.assertThrows
 
 
 class WeatherDataSourceImplTest {
-    private lateinit var client: HttpClient
-    private lateinit var weatherDataSourceImpl: WeatherDataSourceImpl
+    private lateinit var weatherDataSource: WeatherDataSource
+    private lateinit var httpClientProvider: HttpClientProvider
     private lateinit var location: LocationModel
+    private lateinit var weatherLink: String
 
     @BeforeEach
     fun setUp() {
+        httpClientProvider = mockk(relaxed = true)
         location = LocationMocker().getFakeLocation()
+        weatherLink = ""
+        weatherDataSource = WeatherDataSourceImpl(httpClientProvider, weatherLink)
     }
 
     @Test
@@ -50,11 +58,11 @@ class WeatherDataSourceImplTest {
             )
         )
 
-        client = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
-        weatherDataSourceImpl = WeatherDataSourceImpl(client)
+        val weatherApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
+        coEvery { httpClientProvider.createHttpClient(weatherLink) } returns weatherApiClient
 
         //When
-        val result = weatherDataSourceImpl.getWeather(location)
+        val result = weatherDataSource.getWeather(location)
 
         // Then
         assertThat(result).isEqualTo(weatherDto)
@@ -70,12 +78,12 @@ class WeatherDataSourceImplTest {
                       "longitude": 31.7,
                       "timezone": "Africa/Cairo",
     """
-        client = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
-        weatherDataSourceImpl = WeatherDataSourceImpl(client)
+        val weatherApiClient = HttpClientMocker().mockHttpClientWithResponse(fakeJson)
+        coEvery { httpClientProvider.createHttpClient(weatherLink) } returns weatherApiClient
 
         //When & Then
         assertThrows<Exception> {
-            weatherDataSourceImpl.getWeather(location)
+            weatherDataSource.getWeather(location)
         }
 
 

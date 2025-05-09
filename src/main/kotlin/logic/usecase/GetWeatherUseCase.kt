@@ -11,9 +11,8 @@ class GetWeatherUseCase(
     suspend fun getWeatherOfDay(locationModel: LocationModel): WeatherModel {
         try {
             val weather = weatherRepository.getWeather(locationModel)
-            return weather.first()
+            return weather?.firstOrNull() ?: throw NoWeatherFoundException()
         } catch (exception: Exception) {
-            exception.printStackTrace()
             throw NoWeatherFoundException()
         }
 
