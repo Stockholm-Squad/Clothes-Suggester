@@ -1,4 +1,4 @@
-package org.example.data.datasource
+package org.example.data.datasource.location
 
 import io.ktor.client.*
 import io.ktor.client.call.*

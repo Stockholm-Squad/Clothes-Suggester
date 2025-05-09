@@ -1,9 +1,9 @@
 package org.example.di
 
-import org.example.data.datasource.LocationDataSource
-import org.example.data.datasource.LocationDataSourceImpl
-import org.example.data.datasource.WeatherDataSource
-import org.example.data.datasource.WeatherDataSourceImpl
+import org.example.data.datasource.location.LocationDataSource
+import org.example.data.datasource.location.LocationDataSourceImpl
+import org.example.data.datasource.weather.WeatherDataSource
+import org.example.data.datasource.weather.WeatherDataSourceImpl
 import org.example.data.datasource.clothes.OutfitDataSource
 import org.example.data.datasource.clothes.OutfitLocalDataSource
 import org.example.data.repository.LocationRepositoryImpl

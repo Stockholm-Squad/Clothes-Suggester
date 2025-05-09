@@ -4,8 +4,8 @@ import com.google.common.truth.Truth.assertThat
 import io.ktor.client.*
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import org.example.data.datasource.LocationDataSource
-import org.example.data.datasource.LocationDataSourceImpl
+import org.example.data.datasource.location.LocationDataSource
+import org.example.data.datasource.location.LocationDataSourceImpl
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

@@ -6,7 +6,7 @@ import com.google.common.truth.Truth.assertThat
 import io.ktor.client.*
 import kotlinx.coroutines.test.runTest
 import logic.model.LocationModel
-import org.example.data.datasource.WeatherDataSourceImpl
+import org.example.data.datasource.weather.WeatherDataSourceImpl
 import org.example.data.dto.DailyDto
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
