@@ -12,7 +12,7 @@ class GetLocationUseCase(
     }
 
     suspend fun getLocationByCountryAndCity(country: String?, city: String?): LocationModel? {
-        if (country == null || city == null) throw InvalidInput()
+        if (country.isNullOrBlank() || city.isNullOrBlank()) throw InvalidInput()
         return locationRepository.getLocationByCountryAndCity(country, city)
     }
 }
