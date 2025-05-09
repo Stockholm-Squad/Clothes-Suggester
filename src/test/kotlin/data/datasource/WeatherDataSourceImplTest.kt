@@ -3,14 +3,13 @@ package data.datasource
 
 import WeatherDto
 import com.google.common.truth.Truth.assertThat
-import io.ktor.client.*
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import logic.model.LocationModel
 import org.example.data.apiservice.HttpClientProvider
-import org.example.data.datasource.WeatherDataSource
-import org.example.data.datasource.WeatherDataSourceImpl
+import org.example.data.datasource.weather.WeatherDataSource
+import org.example.data.datasource.weather.WeatherDataSourceImpl
 import org.example.data.dto.DailyDto
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

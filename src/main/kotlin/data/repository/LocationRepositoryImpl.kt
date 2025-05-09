@@ -1,7 +1,7 @@
 package org.example.data.repository
 
 import logic.model.LocationModel
-import org.example.data.datasource.LocationDataSource
+import org.example.data.datasource.location.LocationDataSource
 import org.example.data.mapper.toModel
 import org.example.logic.exceptions.NoLocationFoundException
 import org.example.logic.repository.LocationRepository

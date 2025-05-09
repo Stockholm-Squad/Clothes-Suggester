@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import org.example.data.datasource.LocationDataSource
+import org.example.data.datasource.location.LocationDataSource
 import org.example.data.dto.GeoLocationDto
 import org.example.data.dto.IpLocationDto
 import org.example.data.repository.LocationRepositoryImpl
@@ -47,13 +47,14 @@ class LocationRepositoryImplTest {
     }
 
     @Test
-    fun `getCurrentLocation() should throw NoLocationFoundException when datasource failed to get the data`() = runTest {
-        //Given
-        coEvery { locationDataSource.getCurrentLocation() } throws NoLocationFoundException()
+    fun `getCurrentLocation() should throw NoLocationFoundException when datasource failed to get the data`() =
+        runTest {
+            //Given
+            coEvery { locationDataSource.getCurrentLocation() } throws NoLocationFoundException()
 
-        //When & Then
-        assertThrows<NoLocationFoundException> { locationRepository.getCurrentLocation() }
-    }
+            //When & Then
+            assertThrows<NoLocationFoundException> { locationRepository.getCurrentLocation() }
+        }
 
 
     @Test

@@ -1,4 +1,4 @@
-package org.example.data.datasource
+package org.example.data.datasource.location
 
 import org.example.data.dto.GeoLocationDto
 import org.example.data.dto.IpLocationDto

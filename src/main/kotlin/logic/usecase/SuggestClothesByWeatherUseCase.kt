@@ -1,79 +1,29 @@
 package org.example.logic.usecase
 
 import logic.model.WeatherModel
+import org.example.logic.model.ClothingType
+import org.example.logic.repository.OutfitRepository
 import org.example.logic.exceptions.NoWeatherFoundException
 
-class SuggestClothesByWeatherUseCase {
+class SuggestClothesByWeatherUseCase(
+    private val repository: OutfitRepository
+) {
 
-    fun suggestClothesByWeather(weatherModel: WeatherModel): List<String> {
+   suspend fun suggestClothesByWeather(weatherModel: WeatherModel): List<String> {
         val maxTemp = weatherModel.maxTemp ?: throw NoWeatherFoundException()
         val minTemp = weatherModel.minTemp ?: throw NoWeatherFoundException()
 
-        return when {
-            maxTemp < -5 -> getOutfitForTempLessThanNegativeFive()
-            minTemp <= -5 && maxTemp <= 5 -> getOutfitForTempLessThanOrEqualFive()
-            minTemp <= 5 && maxTemp <= 10 -> getOutfitForTempLessThanOrEqualTen()
-            minTemp <= 10 && maxTemp <= 15 -> getOutfitForTempLessThanOrEqualFifteen()
-            minTemp <= 15 && maxTemp <= 20 -> getOutfitForTempLessThanOrEqualTwenty()
-            minTemp <= 20 && maxTemp <= 25 -> getOutfitForTempLessThanOrEqualTwentyFive()
-            minTemp <= 25 && maxTemp <= 30 -> getOutfitForTempLessThanOrEqualThirty()
-            else -> getOutfitForTempMoreThanThirty()
-        }
+        val averageTemp = (minTemp + maxTemp) / 2
+        val clothingType = getClothingTypeFromAverageTemp(averageTemp)
+        return repository.getOutfitForClothingType(clothingType).items
     }
 
-    private fun getOutfitForTempMoreThanThirty() = listOf(
-        "Tank tops",
-        "Shorts",
-        "Sun hat",
-        "Sunglasses",
-        "Sunscreen",
-        "Sandals or light shoes"
-    )
-
-    private fun getOutfitForTempLessThanOrEqualThirty() = listOf(
-        "Short sleeves",
-        "Shorts or skirt",
-        "Breathable fabrics (cotton/linen)"
-    )
-
-    private fun getOutfitForTempLessThanOrEqualTwentyFive() = listOf(
-        "T-shirt or polo",
-        "Shorts or light pants",
-        "Optional light sweater in the morning"
-    )
-
-    private fun getOutfitForTempLessThanOrEqualTwenty() = listOf(
-        "Light jacket or sweatshirt",
-        "T-shirt or long-sleeve shirt",
-        "Jeans or light pants"
-    )
-
-    private fun getOutfitForTempLessThanOrEqualFifteen() = listOf(
-        "Light jacket or coat",
-        "Long-sleeve shirt",
-        "Pants"
-    )
-
-    private fun getOutfitForTempLessThanOrEqualTen() = listOf(
-        "Mid-weight jacket",
-        "Sweater or hoodie",
-        "Jeans or trousers"
-    )
-
-    private fun getOutfitForTempLessThanOrEqualFive() = listOf(
-        "Winter coat",
-        "Sweater or fleece",
-        "Warm pants",
-        "Hat",
-        "Gloves"
-    )
-
-    private fun getOutfitForTempLessThanNegativeFive() = listOf(
-        "Heavy winter coat",
-        "Thermal layers",
-        "Scarf",
-        "Gloves",
-        "Hat",
-        "Insulated boots"
-    )
+    private fun getClothingTypeFromAverageTemp(avgTemp: Double): ClothingType = when {
+        avgTemp < -5 -> ClothingType.HEAVY_WINTER
+        avgTemp <= 5 -> ClothingType.WINTER
+        avgTemp <= 10 -> ClothingType.MID_SEASON
+        avgTemp <= 15 -> ClothingType.LIGHT_JACKET
+        avgTemp <= 25 -> ClothingType.CASUAL
+        else -> ClothingType.SUMMER
+    }
 }

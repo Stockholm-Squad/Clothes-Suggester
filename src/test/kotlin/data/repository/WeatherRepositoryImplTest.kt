@@ -8,7 +8,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import logic.model.LocationModel
 import logic.model.WeatherModel
-import org.example.data.datasource.WeatherDataSource
+import org.example.data.datasource.weather.WeatherDataSource
 import org.example.data.dto.DailyDto
 import org.example.data.repository.WeatherRepositoryImpl
 import org.example.logic.exceptions.NoWeatherFoundException
