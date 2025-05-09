@@ -3,7 +3,6 @@ package data.datasource
 
 import WeatherDto
 import com.google.common.truth.Truth.assertThat
-import io.ktor.client.*
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest

@@ -47,13 +47,14 @@ class LocationRepositoryImplTest {
     }
 
     @Test
-    fun `getCurrentLocation() should throw NoLocationFoundException when datasource failed to get the data`() = runTest {
-        //Given
-        coEvery { locationDataSource.getCurrentLocation() } throws NoLocationFoundException()
+    fun `getCurrentLocation() should throw NoLocationFoundException when datasource failed to get the data`() =
+        runTest {
+            //Given
+            coEvery { locationDataSource.getCurrentLocation() } throws NoLocationFoundException()
 
-        //When & Then
-        assertThrows<NoLocationFoundException> { locationRepository.getCurrentLocation() }
-    }
+            //When & Then
+            assertThrows<NoLocationFoundException> { locationRepository.getCurrentLocation() }
+        }
 
 
     @Test

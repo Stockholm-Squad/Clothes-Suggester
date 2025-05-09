@@ -3,12 +3,12 @@ package org.example.di
 import org.example.data.apiservice.geoLocationLink
 import org.example.data.apiservice.ipLocationLink
 import org.example.data.apiservice.weatherLink
-import org.example.data.datasource.LocationDataSource
-import org.example.data.datasource.LocationDataSourceImpl
-import org.example.data.datasource.WeatherDataSource
-import org.example.data.datasource.WeatherDataSourceImpl
 import org.example.data.datasource.clothes.OutfitDataSource
 import org.example.data.datasource.clothes.OutfitLocalDataSource
+import org.example.data.datasource.location.LocationDataSource
+import org.example.data.datasource.location.LocationDataSourceImpl
+import org.example.data.datasource.weather.WeatherDataSource
+import org.example.data.datasource.weather.WeatherDataSourceImpl
 import org.example.data.repository.LocationRepositoryImpl
 import org.example.data.repository.OutfitRepositoryImpl
 import org.example.data.repository.WeatherRepositoryImpl
@@ -31,7 +31,6 @@ val dataModule = module {
             weatherLink = weatherLink
         )
     }
-    factory<WeatherDataSource> { WeatherDataSourceImpl(get(named("weatherClient"))) }
     factory<OutfitDataSource> { OutfitLocalDataSource() }
 
     factory<LocationRepository> { LocationRepositoryImpl(get()) }

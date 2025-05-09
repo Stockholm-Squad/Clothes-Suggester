@@ -1,7 +1,12 @@
 package logic.usecase
 
 import com.google.common.truth.Truth.assertThat
+import io.mockk.coEvery
+import io.mockk.mockk
+import kotlinx.coroutines.test.runTest
 import logic.model.WeatherModel
+import org.example.logic.model.ClothingType
+import org.example.logic.repository.OutfitRepository
 import org.example.logic.usecase.SuggestClothesByWeatherUseCase
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -11,14 +16,16 @@ import org.junit.jupiter.params.provider.CsvSource
 class SuggestClothesByWeatherUseCaseTest {
 
     private lateinit var useCase: SuggestClothesByWeatherUseCase
+    private lateinit var outfitRepository: OutfitRepository
 
     @BeforeEach
     fun setUp() {
-        useCase = SuggestClothesByWeatherUseCase()
+        outfitRepository = mockk()
+        useCase = SuggestClothesByWeatherUseCase(outfitRepository)
     }
 
     @Test
-    fun `returns heavy winter clothes when maxTemp below -5`() {
+    fun `returns heavy winter clothes when clothing type is heavy winter`() = runTest {
         //Given
         val weatherModel = WeatherModel(
             date = "",
@@ -26,14 +33,18 @@ class SuggestClothesByWeatherUseCaseTest {
             minTemp = -10.0,
             maxWindSpeed = 7.8
         )
+        val heavyWinterList = listOf(
+            "Heavy winter coat", "Thermal layers", "Scarf", "Gloves", "Hat", "Insulated boots"
+        )
+        coEvery { outfitRepository.getOutfitForClothingType(ClothingType.HEAVY_WINTER).items } returns heavyWinterList
 
         // when
         val result = useCase.suggestClothesByWeather(weatherModel)
 
         //Then
         assertThat(result).containsExactly(
-            "Heavy winter coat", "Thermal layers", "Scarf", "Gloves", "Hat", "Insulated boots"
-        ).inOrder()
+            heavyWinterList
+        )
     }
 
     @ParameterizedTest
@@ -44,7 +55,7 @@ class SuggestClothesByWeatherUseCaseTest {
     fun `returns winter clothes for min below -5 and max at most 5`(
         minTemp: Double,
         maxTemp: Double
-    ) {
+    ) = runTest {
         //Given
         val weatherModel = WeatherModel(
             date = "",
@@ -73,7 +84,7 @@ class SuggestClothesByWeatherUseCaseTest {
     fun `returns mid-weight jacket for min at 0 and max at 9`(
         minTemp: Double,
         maxTemp: Double
-    ) {
+    ) = runTest {
         //Given
         val weatherModel = WeatherModel(
             date = "",
@@ -92,7 +103,7 @@ class SuggestClothesByWeatherUseCaseTest {
     }
 
     @Test
-    fun `returns light jacket or coat for 10 to 15 degrees`() {
+    fun `returns light jacket or coat for 10 to 15 degrees`() = runTest {
         //Given
         val weatherModel = WeatherModel(
             date = "",
@@ -111,7 +122,7 @@ class SuggestClothesByWeatherUseCaseTest {
     }
 
     @Test
-    fun `returns light sweatshirt and jeans for 15 to 20 degrees`() {
+    fun `returns light sweatshirt and jeans for 15 to 20 degrees`() = runTest {
         //Given
         val weatherModel = WeatherModel(
             date = "",
@@ -130,7 +141,7 @@ class SuggestClothesByWeatherUseCaseTest {
     }
 
     @Test
-    fun `returns t-shirt and light pants for 20 to 25 degrees`() {
+    fun `returns t-shirt and light pants for 20 to 25 degrees`() = runTest {
         //Given
         val weatherModel = WeatherModel(
             date = "",
@@ -149,7 +160,7 @@ class SuggestClothesByWeatherUseCaseTest {
     }
 
     @Test
-    fun `returns short sleeves and breathable fabrics for 25 to 30 degrees`() {
+    fun `returns short sleeves and breathable fabrics for 25 to 30 degrees`() = runTest {
         //Given
         val weatherModel = WeatherModel(
             date = "",
@@ -168,7 +179,7 @@ class SuggestClothesByWeatherUseCaseTest {
     }
 
     @Test
-    fun `returns summer clothes for temps above 30`() {
+    fun `returns summer clothes for temps above 30`() = runTest {
         //Given
         val weatherModel = WeatherModel(
             date = "",
